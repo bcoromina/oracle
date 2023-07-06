@@ -40,8 +40,6 @@ class MergeSortedListSpec extends AnyFunSuite{
       Person("h", 8)
     )
 
-
-   
     assert((left, right).merge == expected)
   }
 }
