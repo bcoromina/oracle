@@ -1,7 +1,7 @@
 package problem4
 
 import cats.effect.IO
-
+import fs2.Stream
 
 object TakeNSorted {
 
@@ -27,26 +27,24 @@ object TakeNSorted {
   }
 
 
-  import fs2.Stream
 
 
-  def takeNSorted[A](
+
+  def takeNSorted[A: Ordering](
                       initial: A, //Starting generation on `initial` value
                       producer1: A => IO[Option[A]],
                       producer2: A => IO[Option[A]],
                       takeN: Int
-                    )(implicit ord: Ordering[A]): IO[List[A]] = {
-    val takeFromFirtsProducer = takeN /2
-    val takeFromSecondProducer = takeN - takeFromFirtsProducer
+                    ): IO[List[A]] = {
     //https://gist.github.com/gatorcse/1f92aa7e52a04d9c91511ca79f73e911
     val resultStream: Stream[IO, A] = SortMerge.sortMerge(
       List(
-        buildStream(initial, producer1).take(takeFromFirtsProducer),
-        buildStream(initial, producer2).take(takeFromSecondProducer)
+        buildStream(initial, producer1),
+        buildStream(initial, producer2)
       )
     )
 
-    resultStream.compile.toList
+    resultStream.take(takeN).compile.toList
   }
 
   def buildStream[A](
