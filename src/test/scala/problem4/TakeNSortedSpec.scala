@@ -1,8 +1,7 @@
 package problem4
 
-import cats.effect.kernel.Resource.Pure
-import cats.effect.{IO, Ref}
 import cats.effect.unsafe.implicits.global
+import cats.effect.{IO, Ref}
 import org.scalatest.funsuite.AnyFunSuite
 
 import scala.annotation.tailrec

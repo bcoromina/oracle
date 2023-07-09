@@ -13,11 +13,15 @@ object StreamSorter {
                        queue2: Queue[IO, A],
                        takeN: Int
                      ): IO[List[A]] = {
+    val t1 = takeN / 2
+    val t2 = takeN - t1
+
     SortMerge.sortMerge(
       List(
-        Stream.fromQueueUnterminated(queue1),
-        Stream.fromQueueUnterminated(queue2)
+        Stream.fromQueueUnterminated(queue1).take(t1),
+        Stream.fromQueueUnterminated(queue2).take(t2)
       )
-    ).take(takeN).compile.toList
+    )
+    .compile.toList
   }
 }
