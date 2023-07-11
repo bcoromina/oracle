@@ -1,16 +1,13 @@
 package problem5
 
+import cats.effect.IO
 import cats.effect.std.Queue
 import cats.effect.unsafe.implicits.global
-import cats.effect.{IO, Ref}
 import cats.syntax.all._
 import org.scalatest.funsuite.AnyFunSuite
-import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
-
-import scala.util.Random
 
 
-class Problem5_StreamSorterSpec extends AnyFunSuite{
+class StreamSorterSpec extends AnyFunSuite{
 
     test("sort from two queues"){
       val result = for{

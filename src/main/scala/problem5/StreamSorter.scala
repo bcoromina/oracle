@@ -3,7 +3,7 @@ package problem5
 import cats.effect._
 import cats.effect.std.Queue
 import fs2.Stream
-import problem4.SortMerge
+import problem4.StreamSortMerge
 
 import scala.concurrent.duration._
 
@@ -16,7 +16,7 @@ object StreamSorter {
     val t1 = takeN / 2
     val t2 = takeN - t1
 
-    SortMerge.sortMerge(
+    StreamSortMerge.sortMerge(
       List(
         Stream.fromQueueUnterminated(queue1).take(t1),
         Stream.fromQueueUnterminated(queue2).take(t2)

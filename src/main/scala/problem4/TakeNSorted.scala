@@ -37,7 +37,7 @@ object TakeNSorted {
                       takeN: Int
                     ): IO[List[A]] = {
     //https://gist.github.com/gatorcse/1f92aa7e52a04d9c91511ca79f73e911
-    val resultStream: Stream[IO, A] = SortMerge.sortMerge(
+    val resultStream: Stream[IO, A] = StreamSortMerge.sortMerge(
       List(
         buildStream(initial, producer1),
         buildStream(initial, producer2)
@@ -68,7 +68,7 @@ object TakeNSorted {
 
 }
 
-object SortMerge {
+object StreamSortMerge {
 
   import fs2.{ Stream, Pull}
   import cats.collections.Heap
